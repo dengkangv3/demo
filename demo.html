@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset="utf-8"> 
+<html lang="en">
+<head></head>
+<body>
+<canvas id="canvas"></canvas>
+<div id='debug' width="100%">
+</div>
+
+
+</body>
+
+<script src="vudio.js"></script>
+<script type="text/javascript">
+  var canvas = document.querySelector('#canvas')
+
+  navigator.mediaDevices.getUserMedia({
+    audio: true
+  }).then((stream) => {
+    // 调用Vudio
+      var vudio = new Vudio(stream, canvas, {
+          accuracy: 2048,
+          width: 1024,
+          height: 200,
+          waveform: {
+              fadeSide: false,
+              maxHeight: 200,
+              verticalAlign: 'middle',
+              horizontalAlign: 'center',
+              color: '#2980b9'
+          }
+      });
+         vudio.dance();
+
+      setInterval(function () {
+          console.log('currentAudio:'+ vudio.getInfo().currentAudio);
+          console.log('maxAudio'+ vudio.getInfo().maxAudio);
+
+      },1000);
+
+      }).catch((error) => {
+        console.log('getUserMedia not supported on your browser!')
+      })
+
+</script>
+</html>
